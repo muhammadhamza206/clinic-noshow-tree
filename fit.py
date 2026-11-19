@@ -65,16 +65,10 @@ v1.fit(X_train, y_train)
 
 print(export_text(v1, feature_names=feature_names, show_weights=True))
 
-fig, ax = plt.subplots(figsize=(14, 7))
-plot_tree(
-    v1,
-    filled=True,
-    feature_names=feature_names,
-    class_names=["show", "no-show"],
-    fontsize=9,
-    ax=ax,
-)
-fig.savefig(Path(__file__).resolve().parent / "tree_v1.png", bbox_inches="tight")
+fig, ax = plt.subplots(figsize=(13, 6))
+plot_tree(v1, filled=False, impurity=False, feature_names=feature_names,
+          class_names=["show", "no-show"], fontsize=13, ax=ax)
+fig.savefig(Path(__file__).resolve().parent / "tree_v1.png", bbox_inches="tight", dpi=150)
 plt.close(fig)
 
 v1_test_pred = v1.predict(X_test)

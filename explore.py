@@ -31,3 +31,11 @@ for column in group_columns:
     )
     print(f"\nno-show rate by {column}")
     print(table)
+from sklearn.model_selection import train_test_split
+
+y = df["no_show"].eq("no-show").astype(int)
+train_idx, _ = train_test_split(df.index, test_size=0.3, random_state=42, stratify=y)
+train = df.loc[train_idx].assign(is_no_show=y.loc[train_idx])
+for column in ["appointment_hour", "prior_no_shows", "sms_reminder"]:
+    print(f"\ntraining rows: no-show rate by {column}")
+    print(train.groupby(column)["is_no_show"].agg(row_count="size", no_show_rate="mean"))
